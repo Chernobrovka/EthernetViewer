@@ -5,6 +5,7 @@
 
 #include <cstdbool>
 
+#include <QtSerialPort/QtSerialPort>
 #include <QThread>
 
 QT_BEGIN_NAMESPACE
@@ -19,6 +20,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QSerialPort *serialPort = new QSerialPort;
+
 private:
     Ui::MainWindow *ui;
 
@@ -27,13 +30,16 @@ private:
 
     void ethernetComboBoxInit(void);
     void uartComboBoxInit(void);
-
+    void interfaceStateInit(void);
 
     QThread *tcp_socket_thread;
 
+
     bool is_ethernet_connection = false;
+    bool is_uart_connected      = false;
 private slots:
     void onEthernetConnectButtonClicked();
     void onUartConnectButtonClicked();
+    void uartPortUpdate(void);
 };
 #endif // MAINWINDOW_H
